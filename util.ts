@@ -16,7 +16,7 @@ type CreateFileReader = (fileName: string) => Promise<Deno.File>;
 
 export const createFileReader: CreateFileReader = async (fileName) => {
   try {
-    const filePath = path.join(Deno.cwd(), fileName);
+    const filePath = path.isAbsolute(fileName) ? fileName : path.join(Deno.cwd(), fileName);
     const fileReader = await Deno.open(filePath);
     return fileReader;
   } catch {
